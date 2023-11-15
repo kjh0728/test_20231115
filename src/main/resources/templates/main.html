@@ -9,26 +9,41 @@
 <div class="wrap">
     <div class="logo">logo</div>
     <div class="content-wrap">
-        <div class="side-menu">
+        <div class="side-menu note">
             <!--            3. 템플릿에서 게시물 목록 출력-->
             <ul>
-                <li th:each="post : ${postList}">
-                    <a th:href="@{|/detail/${post.id}|}" th:text="${post.title}"></a>
+                <li th:each="note : ${noteList}" th:classappend="${targetNote.id == note.id} ? 'active'">
+                    <a th:href="@{|/note/detail/${note.id}|}" th:text="${note.name}"></a>
                 </li>
             </ul>
             <div>
-                <form action="/write" method="post">
+                <form action="/note/write" method="post">
                     <input type="submit" value="추가">
                 </form>
             </div>
         </div>
+
+        <div class="side-menu">
+            <!--            3. 템플릿에서 게시물 목록 출력-->
+            <ul>
+                <li th:each="post : ${targetNote.postList}" th:classappend="${targetPost.id == post.id} ? 'active'">
+                    <a th:href="@{|/detail/${post.id}|}" th:text="${post.title == ''}? '제목없음':${post.title}"></a>
+                </li>
+            </ul>
+            <div>
+                <form th:action="@{|/write/${targetNote.id}|}" method="post">
+                    <input type="submit" value="추가">
+                </form>
+            </div>
+        </div>
+
         <div class="content">
             <form action="/update" method="post">
                 <div>
                     <input type="hidden" name="id" th:value="${targetPost.id}">
                 </div>
                 <div>
-                    <input type="text" name="title" th:value="${targetPost.title}">
+                    <input type="text" name="title" th:value="${targetPost.title == ''}? '제목없음':${targetPost.title}">
                 </div>
                 <div>
                     <textarea name="content" cols="30" rows="10" th:text="${targetPost.content}"></textarea>
@@ -37,6 +52,11 @@
                     <input type="submit" value="수정">
                 </div>
             </form>
+
+            <form th:action="@{|/delete/${targetPost.id}|}" method="post">
+                <input type="submit" value="삭제">
+            </form>
+
         </div>
     </div>
 </div>

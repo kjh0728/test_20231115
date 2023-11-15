@@ -1,3 +1,13 @@
+a:hover
+{
+    background: lightpink;
+}
+
+.active
+{
+    background: lightpink;
+}
+
 body, ul, li{
     margin:0;
     list-style:none;
@@ -30,6 +40,10 @@ a{
     text-align: center;
 }
 
+.note
+{
+    background: brown;
+}
 .content {
     background: lightseagreen;
     width:90%;
